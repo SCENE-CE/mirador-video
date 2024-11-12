@@ -1,6 +1,8 @@
 import flatten from 'lodash/flatten';
 import flattenDeep from 'lodash/flattenDeep';
-import React, {useRef, useState, useEffect, useCallback} from 'react';
+import React, {
+  useRef, useState, useEffect, useCallback, useLayoutEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -40,7 +42,7 @@ const VideoViewer = ({
 
     // Stop timer if elapsed time exceeds video duration
     if (videoDuration && elapsedTime / 1000 >= videoDuration) {
-      setPaused(true);  // Pause at end
+      setPaused(true); // Pause at end
       setCurrentTime(videoDuration);
       clearInterval(timerRef.current);
     } else {
@@ -86,6 +88,21 @@ const VideoViewer = ({
     }
   }, [muted, textTrackDisabled]);
 
+  const [dimensions, setDimensions] = useState({
+    width: 0, height: 0, parentWidth: 0, parentHeight: 0,
+  });
+
+  useLayoutEffect(() => {
+    if (videoRef.current) {
+      setDimensions({
+        width: videoRef.current.offsetWidth,
+        height: videoRef.current.offsetHeight,
+        parentWidth: videoRef.current.parentElement.parentElement.clientWidth,
+        parentHeight: videoRef.current.parentElement.parentElement.clientHeight,
+      });
+    }
+  }, []);
+
   const videoResources = flatten(
     flattenDeep(
       canvas.getContent().map(annot => {
@@ -113,11 +130,35 @@ const VideoViewer = ({
   const video = len > 0 ? videoResources[len - 1].body[0] : null;
   const videoTargetTemporalfragment = len > 0 ? videoResources[len - 1].temporalfragment : [];
 
-  const currentOrientation = video && video.getWidth() > video.getHeight()
+  let currentOrientation = video && video.getWidth() > video.getHeight()
     ? ORIENTATIONS.LANDSCAPE
     : ORIENTATIONS.PORTRAIT;
 
   const debugPositioning = true;
+
+  console.log('*********************************');
+  console.log('dimensions', dimensions);
+  console.log('ratioWindow', dimensions.width / dimensions.height);
+
+  console.log('video', video.getWidth(), 'x', video.getHeight());
+  const ratioVideo = video.getWidth() / video.getHeight();
+  console.log('ratioVideo', ratioVideo);
+
+  console.log('Parent', dimensions.parentWidth, 'x', dimensions.parentHeight);
+  const ratioParent = dimensions.parentWidth / dimensions.parentHeight;
+  console.log('ratioParent', ratioParent);
+
+  if (currentOrientation === ORIENTATIONS.LANDSCAPE) {
+    if (ratioParent > ratioVideo) {
+      console.log('fit to height');
+      currentOrientation = ORIENTATIONS.PORTRAIT;
+    } else {
+      console.log('fit to width');
+      currentOrientation = ORIENTATIONS.LANDSCAPE;
+    }
+  }
+
+  console.log('currentOrientation', currentOrientation);
 
   return (
     <div
