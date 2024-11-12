@@ -35,6 +35,7 @@ export class VideoViewer extends Component {
 
   /** */
   componentDidUpdate(prevProps) {
+    console.log('VideoViewer componentDidUpdate');
     const {
       canvas, currentTime, muted, paused,
       setCurrentTime, setPaused,
@@ -177,8 +178,8 @@ export class VideoViewer extends Component {
             display: 'flex',
             alignItems: 'center',
             marginBottom: '122px', // TODO Space for navigation controls
-            flexDirection: 'column',
-            // flexDirection: currentOrientation === ORIENTATIONS.LANDSCAPE ? 'row' : 'column',
+            //flexDirection: 'column',
+             flexDirection: currentOrientation === ORIENTATIONS.LANDSCAPE ? 'row' : 'column',
             backgroundColor: 'black',
           }}
           >
@@ -190,12 +191,12 @@ export class VideoViewer extends Component {
             >
               <video
                 style={{
-                  border: debugPositionning ? '6px solid pink' : 'none',
+                  border: debugPositionning ? '6px solid blue' : 'none',
                   position: 'absolute', // 'absolute' or 'block
-                  width: 'auto',
-                  // width: (currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
-                  // height: (currentOrientation === ORIENTATIONS.PORTRAIT ? '100%' : 'auto'),
-                  height: '100%',
+                  // width: 'auto',
+                   width: (currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
+                   height: (currentOrientation === ORIENTATIONS.PORTRAIT ? '100%' : 'auto'),
+                  // height: '100%',
 
                 }}
                 key={video.id}
