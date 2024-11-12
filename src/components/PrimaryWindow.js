@@ -11,7 +11,7 @@ const AudioViewer = lazy(() => import('../containers/AudioViewer'));
 const GalleryView = lazy(() => import('../containers/GalleryView'));
 const SelectCollection = lazy(() => import('../containers/SelectCollection'));
 const WindowViewer = lazy(() => import('../containers/WindowViewer'));
-const VideoViewer = lazy(() => import('../containers/VideoViewer'));
+const VideoViewer = lazy(() => import('./VideoViewer'));
 
 GalleryView.displayName = 'GalleryView';
 SelectCollection.displayName = 'SelectCollection';
