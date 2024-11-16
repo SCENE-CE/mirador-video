@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import AnnotationItem from '../lib/AnnotationItem';
 import AnnotationsOverlayVideo from '../containers/AnnotationsOverlayVideo';
 import WindowCanvasNavigationControlsVideo from '../containers/WindowCanvasNavigationControlsVideo';
+import CustomTubeVideoPlayer from './CustomTubeVideoPlayer';
 
 export const ORIENTATIONS = {
   LANDSCAPE: 'landscape',
@@ -154,7 +155,7 @@ export class VideoViewer extends Component {
       currentOrientation = video.getWidth() > video.getHeight() ? ORIENTATIONS.LANDSCAPE : ORIENTATIONS.PORTRAIT;
     }
 
-    const debugPositionning = false;
+    const debugPositionning = true; // TODO
 
     return (
       <div
@@ -166,6 +167,7 @@ export class VideoViewer extends Component {
           display: 'flex',
           justifyContent: 'center',
           position: 'relative',
+          overflow: 'auto',
         }}
       >
         {video && (
@@ -188,7 +190,7 @@ export class VideoViewer extends Component {
               maxWidth: '100%',
             }}
             >
-              <video
+              {/*<video
                 style={{
                   border: debugPositionning ? '6px solid pink' : 'none',
                   top: 0,
@@ -203,11 +205,23 @@ export class VideoViewer extends Component {
                 {...videoOptions}
               >
                 {' '}
-                {/* pink border */}
+                 pink border
                 <source src={video.id} type={video.getFormat()} />
                 {vttContent.map(vttc => (
                   <track key={vttc.id} src={vttc.id} srcLang={vttc.language} />))}
-              </video>
+              </video>*/}
+              <CustomTubeVideoPlayer
+             /*   url={"https://www.youtube.com/watch?v=ECXTJKk6FDU"}*/
+                // url={"https://tube-arts-lettres-sciences-humaines.apps.education.fr/videos/embed/21baee81-c46d-4848-aec5-9391f23b4654"}
+                // url={"https://tube-arts-lettres-sciences-humaines.apps.education.fr/w/5azyznnqpuhkUvwZ4gfFcs"}
+                // url={"https://video.mshparisnord.fr/w/5GPbYsxX97Kxo8uLviWG4i"}
+                // url={"https://video.mshparisnord.fr/api/v1/videos/5GPbYsxX97Kxo8uLviWG4i"}
+                // url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
+                // url={"https://video.mshparisnord.fr/videos/embed/26176306-5ab8-484a-aaf0-ab50d04cb3ff"}
+                url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
+
+              />
+
 
               <AnnotationsOverlayVideo
                 windowId={windowId}
