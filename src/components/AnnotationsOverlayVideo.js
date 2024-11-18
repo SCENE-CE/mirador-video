@@ -635,10 +635,11 @@ export class AnnotationsOverlayVideo extends Component {
           ref={this.ref}
           style={{
             left: 0,
-            position: 'relative',
+            position: 'fixed',
             top: 0,
             border: debugPositionning ? '6px solid yellow' : 'none',
-            width: (this.currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
+            width: '100%',
+            height: '100%',
 
             // transform: "translate(50%)",
           }}
