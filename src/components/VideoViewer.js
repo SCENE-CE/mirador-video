@@ -188,10 +188,16 @@ export class VideoViewer extends Component {
               border: debugPositionning ? '6px solid green' : 'none',
               height: '100%',
               maxWidth: '100%',
+              position: 'relative',
+              marginBottom: '122px', // TODO Space for navigation controls
+
             }}
             >
               {/* TODO Check what is in videoOptions <video and Vtt track */}
               <ReactPlayer
+                height={(currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto')}
+                width={(currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto')}
+
                 ref={this.playerRef}
                 url={video.id}
                 controls={false} // Hide default controls
@@ -207,10 +213,7 @@ export class VideoViewer extends Component {
                 style={{
                   border: debugPositionning ? '6px solid pink' : 'none',
                   position: 'relative', // 'absolute' or 'block
-                  width: (currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
-                  height: (currentOrientation === ORIENTATIONS.PORTRAIT ? '100%' : 'auto'),
                   maxWidth: '100%',
-
                 }}
               />
 
