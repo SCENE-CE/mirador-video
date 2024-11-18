@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import ReactPlayer from '@celluloid/react-player';
+import {getWindowPausedStatus} from "../state/selectors";
 
-const CustomVideoPlayer = ({ url }) => {
+const CustomVideoPlayer = ({ url, paused }) => {
   const playerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.8);
@@ -37,6 +38,7 @@ const CustomVideoPlayer = ({ url }) => {
         playbackRate={1}
         played={played}
         volume={volume}
+        playing={!paused}
         config={{
           peertube: {
             controls: 0,

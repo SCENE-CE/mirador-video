@@ -114,7 +114,7 @@ export class VideoViewer extends Component {
   /** */
   render() {
     const {
-      annotations, canvas, currentTime, videoOptions, windowId,
+      annotations, canvas, currentTime, videoOptions, windowId, paused,
     } = this.props;
 
     const videoResources = flatten(
@@ -229,6 +229,7 @@ export class VideoViewer extends Component {
                   maxWidth: '100%',
 
                 }}
+                paused={paused}
               />
 
 
