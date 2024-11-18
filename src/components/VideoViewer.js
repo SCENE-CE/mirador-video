@@ -2,10 +2,10 @@ import flatten from 'lodash/flatten';
 import flattenDeep from 'lodash/flattenDeep';
 import React, { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
+import ReactPlayer from '@celluloid/react-player';
 import AnnotationItem from '../lib/AnnotationItem';
 import AnnotationsOverlayVideo from '../containers/AnnotationsOverlayVideo';
 import WindowCanvasNavigationControlsVideo from '../containers/WindowCanvasNavigationControlsVideo';
-import CustomTubeVideoPlayer from './CustomTubeVideoPlayer';
 
 export const ORIENTATIONS = {
   LANDSCAPE: 'landscape',
@@ -18,6 +18,7 @@ export class VideoViewer extends Component {
   constructor(props) {
     super(props);
     this.videoRef = createRef();
+    this.playerRef = createRef();
 
     this.state = {
       start: 0,
@@ -108,8 +109,6 @@ export class VideoViewer extends Component {
     this.setState({ time: 0 });
   }
 
-
-
   /* eslint-disable jsx-a11y/media-has-caption */
   /** */
   render() {
@@ -137,6 +136,7 @@ export class VideoViewer extends Component {
       ]).filter((resource) => resource.body && resource.body[0].__jsonld && resource.body[0].__jsonld.type === 'Video'),
     );
 
+    // TODO Check vtt usage in react player
     const vttContent = annotations
       .flatMap(annoPage => annoPage.json.items.map(anno => anno.body))
       .flat().filter((body) => body.format === 'text/vtt');
@@ -162,76 +162,57 @@ export class VideoViewer extends Component {
         className="outerContainer"
         style={{
           border: debugPositionning ? '6px solid blue' : 'none',
-          width: '100%',
-          height: '100%',
           display: 'flex',
+          height: '100%',
           justifyContent: 'center',
-          position: 'relative',
           overflow: 'auto',
+          position: 'relative',
+          width: '100%',
         }}
       >
         {video && (
         <>
           <div style={{
-            border: debugPositionning ? '6px solid red' : 'none',
-            position: 'relative',
-            width: '100%',
-            display: 'flex',
             alignItems: 'center',
-            marginBottom: '122px', // TODO Space for navigation controls
-            flexDirection: 'column',
-            // flexDirection: currentOrientation === ORIENTATIONS.LANDSCAPE ? 'row' : 'column',
             backgroundColor: 'black',
+            border: debugPositionning ? '6px solid red' : 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: '122px', // TODO Space for navigation controls
+            position: 'relative',
+            // flexDirection: currentOrientation === ORIENTATIONS.LANDSCAPE ? 'row' : 'column',
+            width: '100%',
           }}
           >
             <div style={{
               border: debugPositionning ? '6px solid green' : 'none',
-              width: 'fit-content',
+              height: '100%',
               maxWidth: '100%',
             }}
             >
-              {/*<video
-                style={{
-                  border: debugPositionning ? '6px solid pink' : 'none',
-                  top: 0,
-                  position: 'absolute', // 'absolute' or 'block
-                  width: (currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
-                  height: (currentOrientation === ORIENTATIONS.PORTRAIT ? '100%' : 'auto'),
-                  maxWidth: '100%',
-
-                }}
-                key={video.id}
-                ref={this.videoRef}
-                {...videoOptions}
-              >
-                {' '}
-                 pink border
-                <source src={video.id} type={video.getFormat()} />
-                {vttContent.map(vttc => (
-                  <track key={vttc.id} src={vttc.id} srcLang={vttc.language} />))}
-              </video>*/}
-              <CustomTubeVideoPlayer
-             /*   url={"https://www.youtube.com/watch?v=ECXTJKk6FDU"}*/
-                // url={"https://tube-arts-lettres-sciences-humaines.apps.education.fr/videos/embed/21baee81-c46d-4848-aec5-9391f23b4654"}
-                // url={"https://tube-arts-lettres-sciences-humaines.apps.education.fr/w/5azyznnqpuhkUvwZ4gfFcs"}
-                //  url={"https://video.mshparisnord.fr/w/5GPbYsxX97Kxo8uLviWG4i"}
-                // url={"https://video.mshparisnord.fr/api/v1/videos/5GPbYsxX97Kxo8uLviWG4i"}
-                // url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
-                // url={"https://video.mshparisnord.fr/videos/embed/26176306-5ab8-484a-aaf0-ab50d04cb3ff"}
-                //url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
+              {/* TODO Check what is in videoOptions <video and Vtt track */}
+              <ReactPlayer
+                ref={this.playerRef}
                 url={video.id}
+                controls={false} // Hide default controls
+                pip={false}
+                playbackRate={1}
+                playing={!paused}
+                config={{
+                  peertube: {
+                    controls: 0,
+                    mode: 'p2p-media-loader',
+                  },
+                }}
                 style={{
                   border: debugPositionning ? '6px solid pink' : 'none',
-                  top: 0,
-                  position: 'absolute', // 'absolute' or 'block
+                  position: 'relative', // 'absolute' or 'block
                   width: (currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
                   height: (currentOrientation === ORIENTATIONS.PORTRAIT ? '100%' : 'auto'),
                   maxWidth: '100%',
 
                 }}
-                paused={paused}
               />
-
 
               <AnnotationsOverlayVideo
                 windowId={windowId}
