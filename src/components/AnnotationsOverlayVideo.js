@@ -470,8 +470,8 @@ export class AnnotationsOverlayVideo extends Component {
     if (this.canvasOverlay) return;
 
     const { videoRef } = this.props;
-    if (!videoRef.current) return;
-    this.video = videoRef.current;
+    if (!videoRef) return;
+    this.video = videoRef;
     this.video.addEventListener('timeupdate', this.onVideoTimeUpdate);
     this.video.addEventListener('loadedmetadata', this.onVideoLoadedMetadata);
     this.video.addEventListener('waiting', this.onVideoWaiting);

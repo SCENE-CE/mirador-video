@@ -31,8 +31,8 @@ export class VideoViewer extends Component {
     const { setPaused, setHasTextTrack } = this.props;
     setPaused(true);
 
-    const video = this.videoRef.current;
-    if (video && video.textTracks.length > 0) setHasTextTrack(true);
+    // const video = this.videoRef.current;
+    //if (video && video.textTracks.length > 0) setHasTextTrack(true);
   }
 
   /** */
@@ -63,18 +63,18 @@ export class VideoViewer extends Component {
         }
       }
     }
-    const video = this.videoRef.current;
-    if (video) {
-      if (video.muted !== muted) {
-        video.muted = muted;
-      }
-      if (video.textTracks && video.textTracks.length > 0) {
-        const newMode = textTrackDisabled ? 'disabled' : 'showing';
-        if (video.textTracks[0].mode !== newMode) {
-          video.textTracks[0].mode = newMode;
-        }
-      }
-    }
+    // const video = this.videoRef.current;
+    // if (video) {
+    //   if (video.muted !== muted) {
+    //     video.muted = muted;
+    //   }
+    //   if (video.textTracks && video.textTracks.length > 0) {
+    //     const newMode = textTrackDisabled ? 'disabled' : 'showing';
+    //     if (video.textTracks[0].mode !== newMode) {
+    //       video.textTracks[0].mode = newMode;
+    //     }
+    //   }
+    // }
   }
 
   /** */
@@ -217,9 +217,11 @@ export class VideoViewer extends Component {
                 }}
               />
 
+              { this.playerRef.current && (
+
               <AnnotationsOverlayVideo
                 windowId={windowId}
-                videoRef={this.videoRef}
+                videoRef={this.playerRef.current.getInternalPlayer()}
                 videoTarget={videoTargetTemporalfragment}
                 key={`${windowId} ${video.id}`}
                 currentOrientation={currentOrientation}
@@ -230,7 +232,9 @@ export class VideoViewer extends Component {
                   objectFit: 'contain',
                   border: debugPositionning ? '6px solid yellow' : 'none',
                 }}
+
               />
+              )}
             </div>
           </div>
           <WindowCanvasNavigationControlsVideo windowId={windowId} />
