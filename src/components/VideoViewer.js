@@ -214,12 +214,21 @@ export class VideoViewer extends Component {
              /*   url={"https://www.youtube.com/watch?v=ECXTJKk6FDU"}*/
                 // url={"https://tube-arts-lettres-sciences-humaines.apps.education.fr/videos/embed/21baee81-c46d-4848-aec5-9391f23b4654"}
                 // url={"https://tube-arts-lettres-sciences-humaines.apps.education.fr/w/5azyznnqpuhkUvwZ4gfFcs"}
-                // url={"https://video.mshparisnord.fr/w/5GPbYsxX97Kxo8uLviWG4i"}
+                //  url={"https://video.mshparisnord.fr/w/5GPbYsxX97Kxo8uLviWG4i"}
                 // url={"https://video.mshparisnord.fr/api/v1/videos/5GPbYsxX97Kxo8uLviWG4i"}
                 // url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
                 // url={"https://video.mshparisnord.fr/videos/embed/26176306-5ab8-484a-aaf0-ab50d04cb3ff"}
-                url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
+                //url={"https://video.mshparisnord.fr/videos/embed/5GPbYsxX97Kxo8uLviWG4i?controls=1&controlBar=1&peertubeLink=0&title=0&warningTitle=0&p2p=0&autoplay=0&api=1"}
+                url={video.id}
+                style={{
+                  border: debugPositionning ? '6px solid pink' : 'none',
+                  top: 0,
+                  position: 'absolute', // 'absolute' or 'block
+                  width: (currentOrientation === ORIENTATIONS.LANDSCAPE ? '100%' : 'auto'),
+                  height: (currentOrientation === ORIENTATIONS.PORTRAIT ? '100%' : 'auto'),
+                  maxWidth: '100%',
 
+                }}
               />
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from '@celluloid/react-player';
 
 const CustomVideoPlayer = ({ url }) => {
   const playerRef = useRef(null);
@@ -32,22 +32,21 @@ const CustomVideoPlayer = ({ url }) => {
         controls={false} // Hide default controls
         width="100%"
         height="100%"
+        controls={false}
+        pip={false}
+        playbackRate={1}
+        played={played}
+        volume={volume}
         config={{
           peertube: {
-            controls: 1,
-            controlBar: 1,
-            peertubeLink: 0,
-            title: 0,
-            warningTitle: 0,
-             p2p: 0,
-            autoplay: 0,
-            api: 1
+            controls: 0,
+            mode: 'p2p-media-loader',
           },
         }}
       />
 
       {/* Custom Controls */}
-      <div className="controls">
+      <div className="controls" style={{ position: 'fixed', zIndex: 10000}}> {/* TODO */}
         <button onClick={togglePlay}>
           {isPlaying ? 'Pause' : 'Play'}
         </button>
