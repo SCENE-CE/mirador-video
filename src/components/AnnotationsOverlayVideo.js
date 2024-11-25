@@ -11,7 +11,6 @@ import CanvasOverlayVideo from '../lib/CanvasOverlayVideo';
 import CanvasWorld from '../lib/CanvasWorld';
 import CanvasAnnotationDisplay from '../lib/CanvasAnnotationDisplay';
 import { VideosReferences } from '../plugins/VideosReferences';
-import {ORIENTATIONS} from './VideoViewer';
 
 /** AnnotationsOverlayVideo - based on AnnotationsOverlay */
 export class AnnotationsOverlayVideo extends Component {
@@ -639,7 +638,6 @@ export class AnnotationsOverlayVideo extends Component {
             top: 0,
             border: debugPositionning ? '3px solid yellow' : 'none',
             width: '100%',
-            // transform: "translate(50%)",
           }}
         />
         <ResizeObserver onResize={this.onCanvasResize} />
